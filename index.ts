@@ -16,6 +16,7 @@ import {
 import { MongoClient } from "mongodb";
 import fetch from "node-fetch";
 import {
+    channel,
     daedalus_route,
     daedalus_token,
     discord_token,
@@ -335,7 +336,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
 });
 
 client.on("messageCreate", async (message: Message) => {
-    if (message.reference?.channelId !== "1062742027269316719") return;
+    if (message.reference?.channelId !== channel) return;
     if (!message.content.match(/^\*\*user id\(s\):\*\*(\s+\d+)+/)) return;
 
     try {
