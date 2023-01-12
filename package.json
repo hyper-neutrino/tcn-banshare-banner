@@ -1,0 +1,23 @@
+{
+  "name": "tcn-banshare-banner",
+  "description": "Allow you to easily ban users that are banshared.",
+  "type": "module",
+  "scripts": {
+    "start": "ts-node --esm --swc index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyper-neutrino/tcn-banshare-banner.git"
+  },
+  "author": "hyper-neutrino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hyper-neutrino/tcn-banshare-banner/issues"
+  },
+  "homepage": "https://github.com/hyper-neutrino/tcn-banshare-banner#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "mongodb": "^4.13.0",
+    "node-fetch": "^3.3.0"
+  }
+}

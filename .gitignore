@@ -1,3 +1,7 @@
+# Config Files
+config.ts
+config.js
+
 # Logs
 logs
 *.log
