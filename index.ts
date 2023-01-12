@@ -52,6 +52,7 @@ client.on("ready", async () => {
             type: ApplicationCommandType.ChatInput,
             name: "setup",
             description: "set up the bot",
+            default_member_permissions: PermissionsBitField.Flags.Administrator,
             dm_permission: false,
             options: [
                 {
@@ -229,6 +230,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
             const failed: User[] = [];
 
             const message = await prompt.fetchReference();
+            const reason = message.content.match(/\n\*\*reason\(s\):\*\* (.+)\n\*\*evidence:\*\*/)[1]?.trim().substring(0, 512);
 
             for (const match of message.content
                 .split("\n")[0]
@@ -237,7 +239,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                     const user = await client.users.fetch(match[0]);
 
                     try {
-                        await interaction.guild.bans.create(user);
+                        await interaction.guild.bans.create(user, { reason });
                         banned.push(user);
 
                         if (settings?.ddl) {
@@ -255,13 +257,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                                             duration: 0,
                                             origin: message.url,
                                             reason:
-                                                "TCN Banshare: " +
-                                                    message.content
-                                                        .match(
-                                                            /\n\*\*reason\(s\):\*\* (.+)\n\*\*evidence:\*\*/
-                                                        )[1]
-                                                        ?.trim()
-                                                        .substring(0, 498) ??
+                                                "TCN Banshare: " + reason.substring(0, 498) ??
                                                 "(missing reason)",
                                         }),
                                     }
