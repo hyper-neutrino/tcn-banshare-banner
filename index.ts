@@ -254,6 +254,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                                         },
                                         body: JSON.stringify({
                                             type: "ban",
+                                            mod: interaction.user.id,
                                             duration: 0,
                                             origin: message.url,
                                             reason:
