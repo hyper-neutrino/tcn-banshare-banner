@@ -172,7 +172,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                         components: [
                             {
                                 type: ComponentType.Button,
-                                style: ButtonStyle.Secondary,
+                                style: ButtonStyle.Success,
                                 custom_id: "confirm-execute",
                                 label: "CONFIRM",
                             },
@@ -358,7 +358,7 @@ client.on("messageCreate", async (message: Message) => {
                     components: [
                         {
                             type: ComponentType.Button,
-                            style: ButtonStyle.Secondary,
+                            style: ButtonStyle.Danger,
                             custom_id: "execute-banshare",
                             label: "BAN",
                         },
