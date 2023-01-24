@@ -10,7 +10,7 @@ import {
     Interaction,
     Message,
     Partials,
-    PermissionsBitField,
+    PermissionFlagsBits,
     User,
 } from "discord.js";
 import { MongoClient } from "mongodb";
@@ -52,7 +52,7 @@ client.on("ready", async () => {
             type: ApplicationCommandType.ChatInput,
             name: "setup",
             description: "set up the bot",
-            default_member_permissions: PermissionsBitField.Flags.Administrator,
+            defaultMemberPermissions: PermissionFlagsBits.Administrator,
             dm_permission: false,
             options: [
                 {
@@ -139,7 +139,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                 interaction.user
             );
 
-            if (!member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+            if (!member.permissions.has(PermissionFlagsBits.BanMembers)) {
                 await interaction.reply({
                     content: "You do not have permission to ban members.",
                     ephemeral: true,
@@ -230,7 +230,10 @@ client.on("interactionCreate", async (interaction: Interaction) => {
             const failed: User[] = [];
 
             const message = await prompt.fetchReference();
-            const reason = message.content.match(/\n\*\*reason\(s\):\*\* (.+)\n\*\*evidence:\*\*/)[1]?.trim().substring(0, 512);
+            const reason = message.content
+                .match(/\n\*\*reason\(s\):\*\* (.+)\n\*\*evidence:\*\*/)[1]
+                ?.trim()
+                .substring(0, 512);
 
             for (const match of message.content
                 .split("\n")[0]
@@ -258,7 +261,8 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                                             duration: 0,
                                             origin: message.url,
                                             reason:
-                                                "TCN Banshare: " + reason.substring(0, 498) ??
+                                                "TCN Banshare: " +
+                                                    reason.substring(0, 498) ??
                                                 "(missing reason)",
                                         }),
                                     }
@@ -293,7 +297,11 @@ client.on("interactionCreate", async (interaction: Interaction) => {
 
                     try {
                         await channel.send(
-                            `Banshare Executed.\n\nSuccess: ${
+                            `Banshare Executed; banned ${banned.length} user${
+                                banned.length === 1 ? "" : "s"
+                            }.\nOrigin: ${
+                                message.url
+                            }\nReason: ${reason}\n\nSuccess: ${
                                 banned.join(", ") || "(none)"
                             }\nFailed: ${
                                 failed.join(", ") || "(none)"
@@ -304,7 +312,13 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                             files: [
                                 {
                                     attachment: Buffer.from(
-                                        `Banshare Executed.\n\nSuccess: ${
+                                        `Banshare Executed; banned ${
+                                            banned.length
+                                        } user${
+                                            banned.length === 1 ? "" : "s"
+                                        }.\nOrigin: ${
+                                            message.url
+                                        }\nReason:${reason}\n\nSuccess: ${
                                             banned
                                                 .map(
                                                     (x) => `${x.tag} (${x.id})`
