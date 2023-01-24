@@ -231,7 +231,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
 
             const message = await prompt.fetchReference();
             const reason = message.content
-                .match(/\n\*\*reason\(s\):\*\* (.+)\n\*\*evidence:\*\*/)[1]
+                .match(/\n\*\*reason\(s\):\*\* ([\s\S]+)\n\*\*evidence:\*\*/)[1]
                 ?.trim()
                 .substring(0, 512);
 
