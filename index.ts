@@ -212,7 +212,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
                             components: [
                                 {
                                     type: ComponentType.Button,
-                                    style: ButtonStyle.Secondary,
+                                    style: ButtonStyle.Danger,
                                     custom_id: ".",
                                     label: "BAN",
                                     disabled: true,
